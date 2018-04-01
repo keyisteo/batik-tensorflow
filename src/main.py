@@ -6,6 +6,8 @@ from keras.layers import Flatten
 from keras.layers import Dense
 import tensorflow as tf
 from keras.backend.tensorflow_backend import set_session
+from keras.utils import plot_model
+
 
 #ForGPU
 config = tf.ConfigProto( device_count = {'GPU': 0} ) 
@@ -56,10 +58,20 @@ epochs = 3,
 validation_data = test_set,
 validation_steps = 21)
 
-# Part 3 - Making new predictions
+# Part 3 - Saving Model
+# serialize model to JSON
+model_json = classifier.to_json()
+with open("../model/model.json", "w") as json_file:
+    json_file.write(model_json)
+# serialize weights to HDF5
+classifier.save_weights("../model/model.h5")
+print("Saved model to disk")
+
+
+# Part 4 - Making new predictions
 import numpy as np
 from keras.preprocessing import image
-test_image = image.load_img('../images_data/test/batik2.jpg', target_size = (64, 64))
+test_image = image.load_img('../image_data/test/batik2.jpg', target_size = (64, 64))
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = classifier.predict(test_image)
