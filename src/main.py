@@ -6,9 +6,11 @@ from keras.layers import Flatten
 from keras.layers import Dense
 import tensorflow as tf
 from keras.backend.tensorflow_backend import set_session
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-session = tf.Session(config=config)
+
+#ForGPU
+config = tf.ConfigProto( device_count = {'GPU': 0} ) 
+sess = tf.Session(config=config) 
+set_session(sess)
 
 # Initialising the CNN
 classifier = Sequential()
@@ -31,8 +33,6 @@ classifier.add(Dense(units = 1, activation = 'sigmoid'))
 
 # Compiling the CNN
 classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
-
-# Add for CUDA Nvidia
 
 
 # Part 2 - Fitting the CNN to the images
