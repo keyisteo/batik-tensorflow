@@ -1,0 +1,57 @@
+#:kivy 1.1.0
+
+Root:
+    nama_batik: nama_batik
+	verdict_batik: verdict_batik
+	
+
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            TextInput:
+				height:30
+				id: nama_batik
+                text: ''
+        BoxLayout:
+			orientation: 'horizontal'
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Browse'
+                on_release: root.show_load()
+			Button:
+                text: 'Classify'
+                on_release: root.classify()
+		BoxLayout:
+			orientation: 'vertical'
+			Label:
+				text: 'Kategori batik:'
+			Label:
+				text: 'No input'
+				id: verdict_batik
+		BoxLayout:
+			orientation: 'vertical'
+			Label:
+				text:'Confidence level:'
+			ProgressBar:
+				id: confidence_level
+				max:100
+				value:0
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
