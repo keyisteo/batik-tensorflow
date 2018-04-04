@@ -62,5 +62,3 @@ if __name__ == '__main__':
 	else:
 		prediction = 'kawung'
 	print((prediction))
-
-	return str(prediction)
