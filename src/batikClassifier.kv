@@ -3,15 +3,14 @@
 Root:
     nama_batik: nama_batik
 	verdict_batik: verdict_batik
+	gambar_batik: gambar_batik
 	
 
     BoxLayout:
         orientation: 'vertical'
-        BoxLayout:
-            TextInput:
-				height:30
-				id: nama_batik
-                text: ''
+        TextInput:
+			id: nama_batik
+			text: ''
         BoxLayout:
 			orientation: 'horizontal'
             size_hint_y: None
@@ -22,6 +21,10 @@ Root:
 			Button:
                 text: 'Classify'
                 on_release: root.classify()
+		BoxLayout:
+			Image:
+				id: gambar_batik
+				source: '../image_data/no_image.png'
 		BoxLayout:
 			orientation: 'vertical'
 			Label:

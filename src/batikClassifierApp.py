@@ -12,12 +12,14 @@ class LoadDialog(FloatLayout):
 	load = ObjectProperty(None)
 	cancel = ObjectProperty(None)
 
-
 class Root(FloatLayout):
 	loadfile = ObjectProperty(None)
 	nama_batik = ObjectProperty(None)
 	verdict_batik = ObjectProperty(None)
+	gambar_batik = ObjectProperty(None)
 	filechooser = ObjectProperty(None)
+	
+	
 	
 	def dismiss_popup(self):
 		self._popup.dismiss()
@@ -31,14 +33,25 @@ class Root(FloatLayout):
 		path = self.filechooser.path
 	
 	def load(self, path, filename):
-		#with open(os.path.join(path, filename[0])) as stream:
-		#	self.text_input.text = stream.read()
-		self.nama_batik.text = filename[0]
-		self.dismiss_popup()
+		#self.nama_batik.text = filename[0]
+		#self.dismiss_popup()
+		try:
+			self.nama_batik.text = filename[0]
+			self.dismiss_popup()
+		except FileNotFoundError:
+			self.nama_batik.text = 'No such file!'
 	
 	def classify(self):
-		verdict = evaluate.Evaluate.run(self.nama_batik.text)
-		self.verdict_batik.text = verdict
+		#self.gambar_batik.source = self.nama_batik.text
+		#verdict = evaluate.Evaluate.run(self.nama_batik.text)
+		#self.verdict_batik.text = verdict
+		try:
+			self.gambar_batik.source = self.nama_batik.text
+			verdict = evaluate.Evaluate.run(self.nama_batik.text)
+			self.verdict_batik.text = verdict
+		except FileNotFoundError:
+			self.gambar_batik.source = '../image_data/no_image.png'
+			self.nama_batik.text = 'No such file!'
 
 class BatikClassifier(App):
 	pass
